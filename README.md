@@ -1,6 +1,6 @@
 ## TODO
 
-[ ] - add kind of this to console in prod :
+- [ ] add kind of this to console in prod :
 
 Welcome to     _ _ _
 __      ____ _| | | |__   __ ___   _____ _ __
