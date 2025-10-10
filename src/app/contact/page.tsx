@@ -1,13 +1,12 @@
 "use client"
 
-import Link from "next/link"
 import ContactForm from "./_components/contact-form"
 
 export default function Contact() {
   return (
     <div className="min-h-[calc(100vh-100px)] w-full">
       <ContactForm />
-      <div className=" mt-6 text-center text-sm text-gray-500">
+      {/* <div className=" mt-6 text-center text-sm text-gray-500">
         <p className="my-3">OR</p>
         <p>
           Contact directly:{" "}
@@ -18,7 +17,7 @@ export default function Contact() {
             akshayyelle6@gmail.com
           </Link>
         </p>
-      </div>
+      </div> */}
     </div>
   )
 }

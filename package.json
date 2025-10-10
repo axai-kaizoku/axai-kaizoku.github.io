@@ -13,6 +13,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
     "@hookform/resolvers": "^3.10.0",
     "@next/bundle-analyzer": "^15.0.3",
     "@radix-ui/react-label": "^2.1.7",

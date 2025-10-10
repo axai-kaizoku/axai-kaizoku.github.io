@@ -11,9 +11,9 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { sendEmailWrapper } from "@/lib/actions"
+import emailjs from "@emailjs/browser"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useTransition } from "react"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
@@ -40,7 +40,7 @@ const formSchema = z.object({
 })
 
 export default function ContactForm() {
-  const [pending, startTransition] = useTransition()
+  const [pending, setPending] = useState(false)
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -51,26 +51,36 @@ export default function ContactForm() {
     },
   })
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const loadingToast = toast.loading("Submitting your message...")
+    // show a loading toast
+    // const toastId = toast.loading("Submitting your message...")
 
-    startTransition(() => {
-      void (async () => {
-        try {
-          const res = await sendEmailWrapper({ ...values })
+    setPending(true)
+    try {
+      const res = await emailjs.send(
+        "service_4qqth59", // service ID
+        "template_vf2mcx4", // template ID
+        {
+          from_name: values.name,
+          from_email: values.email,
+          message: `${values.name} - ${values.email} - ${values.message}`,
+        },
+        "ZrRVZQQnvYrSp1epQ" // public key
+      )
 
-          if (!res.ok) throw new Error("Network response was not ok")
+      if (res.status !== 200) {
+        toast.error("Failed to send your message. Please try again.")
+        return
+      }
 
-          form.reset()
-          toast.success("Your message has been sent successfully!", {
-            id: loadingToast,
-          })
-        } catch {
-          toast.error("Failed to send your message. Please try again.", {
-            id: loadingToast,
-          })
-        }
-      })()
-    })
+      // EmailJS returns status 200 even if email fails, so you can optionally check res.text
+      form.reset()
+
+      toast.success("Your message has been sent successfully!")
+    } catch (err) {
+      console.error(err)
+      toast.error("Failed to send your message. Please try again.")
+    }
+    setPending(false)
   }
 
   return (
