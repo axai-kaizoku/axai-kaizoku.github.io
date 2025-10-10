@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
+import { sendEmailWrapper } from "@/lib/actions"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTransition } from "react"
 import { useForm } from "react-hook-form"
@@ -55,13 +56,7 @@ export default function ContactForm() {
     startTransition(() => {
       void (async () => {
         try {
-          const res = await fetch(`${BASEURL}/api/contact/`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(values),
-          })
+          const res = await sendEmailWrapper({ ...values })
 
           if (!res.ok) throw new Error("Network response was not ok")
 
