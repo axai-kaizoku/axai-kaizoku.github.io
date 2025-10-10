@@ -8,7 +8,7 @@
  * import BundleAnalyzer from "@next/bundle-analyzer"
  * const isProd = process.env.NODE_ENV === "production"
  *
- * /** @type {import("next").NextConfig} //
+ * /** @type {import("next").default} //
  *
  * const nextConfig = {
  * typescript: {
@@ -35,8 +35,9 @@
 
 await import("./src/env.js")
 
-/** @type {import("next").NextConfig} */
+/** @type {import("next").default} */
 const config = {
+  output: "export",
   typescript: {
     ignoreBuildErrors: true,
   },

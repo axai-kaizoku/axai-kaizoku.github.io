@@ -70,8 +70,8 @@ jobs:
       - name: Build with Next.js
         run: ${{ steps.detect-package-manager.outputs.manager }} run ${{ steps.detect-package-manager.outputs.build }}
 
-      - name: Export static files
-        run: ${{ steps.detect-package-manager.outputs.manager }} run ${{ steps.detect-package-manager.outputs.export }}
+      # - name: Export static files
+      #   run: ${{ steps.detect-package-manager.outputs.manager }} run ${{ steps.detect-package-manager.outputs.export }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
