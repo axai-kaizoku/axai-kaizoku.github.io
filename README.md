@@ -1,12 +1,8 @@
-## TODO
+# todo
 
-- [ ] add kind of this to console in prod :
-
-Welcome to     _ _ _
-__      ____ _| | | |__   __ ___   _____ _ __
-\ \ /\ / / _` | | | '_ \ / _` \ \ / / _ \ '_ \
- \ V  V / (_| | | | | | | (_| |\ V /  __/ | | |
-  \_/\_/ \__,_|_|_|_| |_|\__,_| \_/ \___|_| |_|
-
-
-  
+- [x] header ⤴️
+- [x] footer 🔻
+- [x] make it reponsive 📱
+- [x] home 🏠
+- [ ] changelog 📈
+- [ ] blog 🗞️
