@@ -29,30 +29,32 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Detect package manager
+        id: detect-package-manager
+        run: |
+          if [ -f "${{ github.workspace }}/yarn.lock" ]; then
+            echo "manager=yarn" >> $GITHUB_OUTPUT
+            echo "install=install --frozen-lockfile" >> $GITHUB_OUTPUT
+            echo "build=next build" >> $GITHUB_OUTPUT
+            echo "export=next export" >> $GITHUB_OUTPUT
+          else
+            echo "manager=npm" >> $GITHUB_OUTPUT
+            echo "install=ci" >> $GITHUB_OUTPUT
+            echo "build=npx next build" >> $GITHUB_OUTPUT
+            echo "export=npx next export" >> $GITHUB_OUTPUT
+          fi
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: "18"
-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 9
-          run_install: false
-
-      - name: Setup pnpm cache
-        uses: actions/cache@v4
-        with:
-          path: ~/.pnpm-store
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-
+          cache: ${{ steps.detect-package-manager.outputs.manager }}
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.install }}
 
       - name: Install TypeScript and Types
-        run: pnpm add -D typescript @types/node
+        run: ${{ steps.detect-package-manager.outputs.manager }} add --dev typescript @types/node
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -66,10 +68,10 @@ jobs:
           key: ${{ runner.os }}-nextjs-clear-cache
 
       - name: Build with Next.js
-        run: pnpm next build
+        run: ${{ steps.detect-package-manager.outputs.manager }} run ${{ steps.detect-package-manager.outputs.build }}
 
       - name: Export static files
-        run: pnpm next export
+        run: ${{ steps.detect-package-manager.outputs.manager }} run ${{ steps.detect-package-manager.outputs.export }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
