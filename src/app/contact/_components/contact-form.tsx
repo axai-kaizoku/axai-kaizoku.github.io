@@ -17,6 +17,9 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
 
+// const BASEURL = "http://localhost:3000"
+const BASEURL = "https://axai-kaizoku.github.io"
+
 const formSchema = z.object({
   name: z
     .string()
@@ -46,31 +49,33 @@ export default function ContactForm() {
       message: "",
     },
   })
-
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    startTransition(async () => {
-      const loadingToast = toast.loading("Submitting your message...")
+    const loadingToast = toast.loading("Submitting your message...")
 
-      try {
-        const res = await fetch("/api/contact/", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(values),
-        })
+    startTransition(() => {
+      void (async () => {
+        try {
+          const res = await fetch(`${BASEURL}/api/contact/`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(values),
+          })
 
-        if (!res.ok) throw new Error("Network response was not ok")
+          if (!res.ok) throw new Error("Network response was not ok")
 
-        form.reset()
-        toast.success("Your message has been sent successfully!", {
-          id: loadingToast,
-        })
-      } catch {
-        toast.error("Failed to send your message. Please try again.", {
-          id: loadingToast,
-        })
-      }
+          form.reset()
+          toast.success("Your message has been sent successfully!", {
+            id: loadingToast,
+          })
+        } catch (err) {
+          console.log(err)
+          toast.error("Failed to send your message. Please try again.", {
+            id: loadingToast,
+          })
+        }
+      })()
     })
   }
 
