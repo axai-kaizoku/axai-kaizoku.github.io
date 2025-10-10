@@ -12,6 +12,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useTransition } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
@@ -35,6 +36,8 @@ const formSchema = z.object({
 })
 
 export default function ContactForm() {
+  const [pending, startTransition] = useTransition()
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -43,29 +46,32 @@ export default function ContactForm() {
       message: "",
     },
   })
+
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const loadingToast = toast.loading("Submitting your message...")
+    startTransition(async () => {
+      const loadingToast = toast.loading("Submitting your message...")
 
-    try {
-      const res = await fetch("/api/contact/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(values),
-      })
+      try {
+        const res = await fetch("/api/contact/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(values),
+        })
 
-      if (!res.ok) throw new Error("Network response was not ok")
+        if (!res.ok) throw new Error("Network response was not ok")
 
-      form.reset()
-      toast.success("Your message has been sent successfully!", {
-        id: loadingToast,
-      })
-    } catch {
-      toast.error("Failed to send your message. Please try again.", {
-        id: loadingToast,
-      })
-    }
+        form.reset()
+        toast.success("Your message has been sent successfully!", {
+          id: loadingToast,
+        })
+      } catch {
+        toast.error("Failed to send your message. Please try again.", {
+          id: loadingToast,
+        })
+      }
+    })
   }
 
   return (
@@ -137,7 +143,7 @@ export default function ContactForm() {
                   )}
                 />
 
-                <Button type="submit" className="w-full">
+                <Button type="submit" className="w-full" disabled={pending}>
                   Send Message
                 </Button>
               </div>

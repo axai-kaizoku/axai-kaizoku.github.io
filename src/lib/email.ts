@@ -37,7 +37,6 @@ export async function sendEmail({
 }) {
   const transport = getTransporter()
   const from = env.GOOGLE_USER
-  console.log({ from, to, subject, text, html })
 
   await transport.sendMail({
     from: `Akshay <${from}>`,
