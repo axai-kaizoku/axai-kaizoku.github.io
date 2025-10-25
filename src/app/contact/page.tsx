@@ -1,6 +1,10 @@
-"use client"
+import ContactForm from "./_components/contact-form";
 
-import ContactForm from "./_components/contact-form"
+import { type Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Contact",
+};
 
 export default function Contact() {
   return (
@@ -19,5 +23,5 @@ export default function Contact() {
         </p>
       </div> */}
     </div>
-  )
+  );
 }

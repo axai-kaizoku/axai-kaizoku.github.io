@@ -1,14 +1,14 @@
-import nodemailer from "nodemailer"
-import { env } from "@/env"
+import nodemailer from "nodemailer";
+import { env } from "@/env";
 
-let transporter: nodemailer.Transporter | null = null
+let transporter: nodemailer.Transporter | null = null;
 
 function getTransporter() {
   if (!transporter) {
-    const clientId = env.GOOGLE_CLIENT_ID
-    const clientSecret = env.GOOGLE_CLIENT_SECRET
-    const refreshToken = env.GOOGLE_REFRESH_TOKEN
-    const user = env.GOOGLE_USER
+    const clientId = env.GOOGLE_CLIENT_ID;
+    const clientSecret = env.GOOGLE_CLIENT_SECRET;
+    const refreshToken = env.GOOGLE_REFRESH_TOKEN;
+    const user = env.GOOGLE_USER;
 
     transporter = nodemailer.createTransport({
       service: "gmail",
@@ -19,9 +19,9 @@ function getTransporter() {
         clientSecret,
         refreshToken,
       },
-    })
+    });
   }
-  return transporter
+  return transporter;
 }
 
 export async function sendEmail({
@@ -30,13 +30,13 @@ export async function sendEmail({
   text,
   html,
 }: {
-  to: string
-  subject: string
-  text: string
-  html?: string
+  to: string;
+  subject: string;
+  text: string;
+  html?: string;
 }) {
-  const transport = getTransporter()
-  const from = env.GOOGLE_USER
+  const transport = getTransporter();
+  const from = env.GOOGLE_USER;
 
   await transport.sendMail({
     from: `Akshay <${from}>`,
@@ -44,5 +44,5 @@ export async function sendEmail({
     subject,
     text,
     html,
-  })
+  });
 }

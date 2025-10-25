@@ -1,9 +1,9 @@
-import { BackgroundWithAnim } from "@/components/layout/background-with-anim"
-import ScrollDown from "@/components/layout/scroll-down"
-import { GridBeam } from "@/components/ui/grid-beam"
-import { ConfettiStar } from "./_components/confetti-star"
-import ResumeSectionWrapper from "./_components/resume-section-wrapper"
-import { TypingEffect } from "./_components/typing-effect"
+import { BackgroundWithAnim } from "@/components/layout/background-with-anim";
+import ScrollDown from "@/components/layout/scroll-down";
+import { GridBeam } from "@/components/ui/grid-beam";
+import { ConfettiStar } from "./_components/confetti-star";
+import ResumeSectionWrapper from "./_components/resume-section-wrapper";
+import { TypingEffect } from "./_components/typing-effect";
 
 export default function Home() {
   return (
@@ -28,5 +28,5 @@ export default function Home() {
       <ResumeSectionWrapper />
       <ScrollDown />
     </>
-  )
+  );
 }

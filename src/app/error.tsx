@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function Error() {
   return (
@@ -9,8 +9,8 @@ export default function Error() {
       <h1 className="text-6xl font-bold text-center">Oops</h1>
       <p className="text-center">Unknown error occured !</p>
       <Button asChild variant={"secondary"}>
-        <Link href={"/"}>Refresh</Link>
+        <Link href={"/contact"}>Contact</Link>
       </Button>
     </section>
-  )
+  );
 }

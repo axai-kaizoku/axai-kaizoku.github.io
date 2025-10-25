@@ -1,4 +1,4 @@
-import type { LucideProps } from "lucide-react"
+import type { LucideProps } from "lucide-react";
 
 export const Star = (props: LucideProps) => {
   return (
@@ -20,8 +20,8 @@ export const Star = (props: LucideProps) => {
         </g>
       </g>
     </svg>
-  )
-}
+  );
+};
 
 const BackgroundPattern = (props: LucideProps) => {
   return (
@@ -119,5 +119,5 @@ const BackgroundPattern = (props: LucideProps) => {
         </clipPath>
       </defs>
     </svg>
-  )
-}
+  );
+};

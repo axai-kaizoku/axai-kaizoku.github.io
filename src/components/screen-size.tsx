@@ -1,8 +1,8 @@
-import { env } from "@/env"
+import { env } from "@/env";
 
 export const ScreenSize = () => {
   if (env.NODE_ENV === "production") {
-    return null
+    return null;
   }
 
   return (
@@ -20,5 +20,5 @@ export const ScreenSize = () => {
       <div className="hidden 2xl:block">2xl+</div>
       {/* 2X large and above (1536px and up) */}
     </div>
-  )
-}
+  );
+};

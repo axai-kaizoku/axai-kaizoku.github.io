@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import type { PropsWithChildren } from "react"
-import { LazyMotion, domAnimation, m } from "framer-motion"
+import type { PropsWithChildren } from "react";
+import { LazyMotion, domAnimation, m } from "framer-motion";
 
 export default function Reveal({ children }: PropsWithChildren) {
   return (
@@ -14,5 +14,5 @@ export default function Reveal({ children }: PropsWithChildren) {
         {children}
       </m.div>
     </LazyMotion>
-  )
+  );
 }

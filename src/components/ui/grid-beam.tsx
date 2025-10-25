@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import React, { useEffect, useState } from "react"
-import { motion } from "framer-motion"
-import { cn } from "@/lib/utils"
+import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
 
 export const GridBeam = () => {
   const beams = [
@@ -22,35 +22,35 @@ export const GridBeam = () => {
     "h-40 w-40 bottom-0 -left-10 sm:bottom-36 sm:-left-16 absolute rotate-90 transform -scale-y-100",
     "h-20 w-40 bottom-20 right-0 sm:bottom-24 sm:-right-96 absolute ",
     "h-40 w-40 bottom-0 -left-10 sm:bottom-0 sm:-right-56 absolute",
-  ] as const
+  ] as const;
 
-  const [randNum, setRandNum] = useState<number[]>([2, 3, 4])
-  const [secNum, setSecNum] = useState<number[]>([0])
+  const [randNum, setRandNum] = useState<number[]>([2, 3, 4]);
+  const [secNum, setSecNum] = useState<number[]>([0]);
 
   useEffect(() => {
     const generateRandomNumbers = (count: number) =>
       Array.from({ length: count }, () =>
         Math.floor(Math.random() * beams.length)
-      )
+      );
 
-    setRandNum(generateRandomNumbers(Math.floor(Math.random() * 3) + 1))
+    setRandNum(generateRandomNumbers(Math.floor(Math.random() * 3) + 1));
     const interval1 = setInterval(
       () =>
         setRandNum(generateRandomNumbers(Math.floor(Math.random() * 3) + 1)),
       2000
-    )
+    );
 
-    setSecNum(generateRandomNumbers(1))
+    setSecNum(generateRandomNumbers(1));
     const interval2 = setInterval(
       () => setSecNum(generateRandomNumbers(1)),
       2800
-    )
+    );
 
     return () => {
-      clearInterval(interval1)
-      clearInterval(interval2)
-    }
-  }, [beams.length])
+      clearInterval(interval1);
+      clearInterval(interval2);
+    };
+  }, [beams.length]);
 
   return (
     <>
@@ -61,16 +61,16 @@ export const GridBeam = () => {
       {secNum[0] ? <Beam className={beams[secNum[0]]} duration={2.8} /> : null}
       {/* <Beam className={beams[9]} duration={1.8} /> */}
     </>
-  )
-}
+  );
+};
 
 type BeamOptions = {
-  duration?: number
-  className?: string
-}
+  duration?: number;
+  className?: string;
+};
 
 export const Beam = ({ className = "", duration = 1.8 }: BeamOptions) => {
-  const gradId = `grad-${className.split(" ").join("-")}-${duration}`
+  const gradId = `grad-${className.split(" ").join("-")}-${duration}`;
   return (
     <svg
       width="156"
@@ -127,5 +127,5 @@ export const Beam = ({ className = "", duration = 1.8 }: BeamOptions) => {
         </motion.linearGradient>
       </defs>
     </svg>
-  )
-}
+  );
+};

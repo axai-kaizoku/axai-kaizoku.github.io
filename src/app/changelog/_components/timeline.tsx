@@ -1,31 +1,31 @@
-"use client"
-import { motion, useScroll, useTransform } from "framer-motion"
-import { useEffect, useRef, useState } from "react"
+"use client";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 
 type TimelineEntry = {
-  title: string
-  content: React.ReactNode
-}
+  title: string;
+  content: React.ReactNode;
+};
 
 export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
-  const ref = useRef<HTMLDivElement>(null)
-  const containerRef = useRef<HTMLDivElement>(null)
-  const [height, setHeight] = useState(0)
+  const ref = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [height, setHeight] = useState(0);
 
   useEffect(() => {
     if (ref.current) {
-      const rect = ref.current.getBoundingClientRect()
-      setHeight(rect.height)
+      const rect = ref.current.getBoundingClientRect();
+      setHeight(rect.height);
     }
-  }, [ref])
+  }, [ref]);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start 10%", "end 55%"],
-  })
+  });
 
-  const heightTransform = useTransform(scrollYProgress, [0, 1], [0, height])
-  const opacityTransform = useTransform(scrollYProgress, [0, 0.1], [0, 1])
+  const heightTransform = useTransform(scrollYProgress, [0, 1], [0, height]);
+  const opacityTransform = useTransform(scrollYProgress, [0, 0.1], [0, 1]);
 
   return (
     <div className="w-full bg-background md:px-10" ref={containerRef}>
@@ -74,5 +74,5 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};

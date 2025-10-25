@@ -1,19 +1,19 @@
-"use client"
+"use client";
 
-import { cn } from "@/lib/utils"
-import Link from "next/link"
-import { useCallback } from "react"
+import { cn } from "@/lib/utils";
+import Link from "next/link";
+import { useCallback } from "react";
 
 export default function MobileNav({
   showNav,
   setShowNav,
 }: {
-  showNav: boolean
-  setShowNav: (value: ((prevstate: boolean) => boolean) | boolean) => void
+  showNav: boolean;
+  setShowNav: (value: ((prevstate: boolean) => boolean) | boolean) => void;
 }) {
   const toggleNav = useCallback(() => {
-    setShowNav((current) => !current)
-  }, [setShowNav])
+    setShowNav((current) => !current);
+  }, [setShowNav]);
 
   return (
     <>
@@ -77,7 +77,7 @@ export default function MobileNav({
                 }}
                 key={`${index}-mobile-nav`}
               />
-            )
+            );
           })}
         </div>
         <div
@@ -104,5 +104,5 @@ export default function MobileNav({
         </div>
       </div>
     </>
-  )
+  );
 }

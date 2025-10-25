@@ -1,32 +1,106 @@
-import "@/styles/globals.css"
+import "@/styles/globals.css";
 
-import { Montserrat, Space_Grotesk } from "next/font/google"
-import { GeistSans } from "geist/font/sans"
-import type { Viewport, Metadata } from "next"
+import Footer from "@/components/layout/footer";
+import Header from "@/components/layout/header";
+import { ScreenSize } from "@/components/screen-size";
+import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster } from "@/components/ui/sonner";
+import { siteConfig } from "@/lib/site-config";
+import { cn } from "@/lib/utils";
+import { GeistSans } from "geist/font/sans";
+import type { Metadata, Viewport } from "next";
+import { Montserrat, Space_Grotesk } from "next/font/google";
 
-import { ThemeProvider } from "@/components/theme-provider"
-
-import Header from "@/components/layout/header"
-import Footer from "@/components/layout/footer"
-import { cn } from "@/lib/utils"
-import { ScreenSize } from "@/components/screen-size"
-import { Toaster } from "@/components/ui/sonner"
-
-const montserrat = Montserrat({ subsets: ["latin"], variable: "--montserrat" })
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  variable: "--montserrat",
+  display: "swap",
+});
 const space_grotesk = Space_Grotesk({
   subsets: ["latin"],
   variable: "--space_grotesk",
-})
+  display: "swap",
+});
 
 export const metadata: Metadata = {
-  title: "Akshay Yelle - Developer Portfolio",
-  description: "Yo 🤘🏻",
-  icons: [{ rel: "icon", url: "/favicon.ico" }],
-}
+  metadataBase: new URL(siteConfig.url),
+  title: {
+    template: "%s • Akshay Yelle",
+    default: siteConfig.name,
+  },
+  description: siteConfig.description,
+  applicationName: "Portfolio Website",
+  keywords: [
+    "frontend",
+    "developer",
+    "fullstack",
+    "reactjs",
+    "nextjs",
+    "javascript",
+    "typescript",
+    "portfolio",
+    "t3-stack",
+    "tailwindcss",
+  ],
+  referrer: "origin-when-cross-origin",
+  authors: [{ name: "Akshay Yelle" }],
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_IN",
+    url: siteConfig.url,
+    title: siteConfig.name,
+    description: siteConfig.description,
+    siteName: siteConfig.name,
+    images: [
+      {
+        url: siteConfig.image,
+        width: 1200,
+        height: 630,
+        alt: siteConfig.name,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: siteConfig.name,
+    description: siteConfig.description,
+    images: [
+      {
+        url: siteConfig.image,
+        alt: "Akshay Yelle",
+      },
+    ],
+    creator: "@akshay_yelle",
+    site: "@akshay_yelle",
+  },
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/favicon.ico",
+    other: {
+      rel: "apple-touch-icon-precomposed",
+      url: "/favicon.ico",
+    },
+  },
+  alternates: {
+    canonical: siteConfig.url,
+  },
+};
 
 export const viewport: Viewport = {
   maximumScale: 1,
-}
+};
 
 export default function RootLayout({
   children,
@@ -51,5 +125,5 @@ export default function RootLayout({
         </ThemeProvider>
       </body>
     </html>
-  )
+  );
 }

@@ -1,9 +1,9 @@
-import { cn } from "@/lib/utils"
-import { SiGithub } from "@react-icons/all-files/si/SiGithub"
-import { SiInstagram } from "@react-icons/all-files/si/SiInstagram"
-import { SiLinkedin } from "@react-icons/all-files/si/SiLinkedin"
-import { cva } from "class-variance-authority"
-import Link from "next/link"
+import { cn } from "@/lib/utils";
+import { SiGithub } from "@react-icons/all-files/si/SiGithub";
+import { SiInstagram } from "@react-icons/all-files/si/SiInstagram";
+import { SiLinkedin } from "@react-icons/all-files/si/SiLinkedin";
+import { cva } from "class-variance-authority";
+import Link from "next/link";
 
 const iconVariants = cva(
   "p-1 text-gray-400 hover:text-gray-500 dark:text-gray-600 dark:hover:text-gray-500",
@@ -20,7 +20,7 @@ const iconVariants = cva(
       size: "md",
     },
   }
-)
+);
 
 export const Instagram = ({ classname }: { classname?: string }) => {
   return (
@@ -31,8 +31,8 @@ export const Instagram = ({ classname }: { classname?: string }) => {
     >
       <SiInstagram className={cn("h-5 w-5", classname)} />
     </Link>
-  )
-}
+  );
+};
 
 export const Github = ({ classname }: { classname?: string }) => {
   return (
@@ -43,8 +43,8 @@ export const Github = ({ classname }: { classname?: string }) => {
     >
       <SiGithub className={cn("h-5 w-5", classname)} />
     </Link>
-  )
-}
+  );
+};
 
 export const LinkedIn = ({ classname }: { classname?: string }) => {
   return (
@@ -55,8 +55,8 @@ export const LinkedIn = ({ classname }: { classname?: string }) => {
     >
       <SiLinkedin className={cn("h-5 w-5", classname)} />
     </Link>
-  )
-}
+  );
+};
 
 export const Twitter = ({ classname }: { classname?: string }) => {
   return (
@@ -72,5 +72,5 @@ export const Twitter = ({ classname }: { classname?: string }) => {
         <path d="M14.234 10.162 22.977 0h-2.072l-7.591 8.824L7.251 0H.258l9.168 13.343L.258 24H2.33l8.016-9.318L16.749 24h6.993zm-2.837 3.299-.929-1.329L3.076 1.56h3.182l5.965 8.532.929 1.329 7.754 11.09h-3.182z" />
       </svg>
     </Link>
-  )
-}
+  );
+};

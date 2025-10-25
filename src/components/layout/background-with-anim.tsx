@@ -1,5 +1,5 @@
-import type { PropsWithChildren } from "react"
-import { GridBeam } from "../ui/grid-beam"
+import type { PropsWithChildren } from "react";
+import { GridBeam } from "../ui/grid-beam";
 
 export const BackgroundWithAnim = ({ children }: PropsWithChildren) => {
   return (
@@ -25,5 +25,5 @@ export const BackgroundWithAnim = ({ children }: PropsWithChildren) => {
         <GridBeam className="top-40 left-80 rotate-180" /> */}
       </div>
     </>
-  )
-}
+  );
+};

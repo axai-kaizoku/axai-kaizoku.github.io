@@ -1,13 +1,13 @@
-"use client"
-import Link from "next/link"
-import { ToggleTheme } from "../darkmode-icon"
-import { buttonVariants } from "../ui/button"
-import { cn } from "@/lib/utils"
-import { useState } from "react"
-import MobileNav from "./header.mobile"
+"use client";
+import Link from "next/link";
+import { ToggleTheme } from "../darkmode-icon";
+import { buttonVariants } from "../ui/button";
+import { cn } from "@/lib/utils";
+import { useState } from "react";
+import MobileNav from "./header.mobile";
 
 export default function Header() {
-  const [showNav, setShowNav] = useState(false)
+  const [showNav, setShowNav] = useState(false);
 
   return (
     <>
@@ -15,9 +15,16 @@ export default function Header() {
         <nav className="flex items-center">
           <Link
             href="/"
-            className="ring-1 z-20 dark:ring-slate-100 ring-slate-800 rounded-full size-10 sm:size-12 mr-1 sm:mr-6 items-center flex justify-center"
+            className="z-20 rounded-full size-10 sm:size-12 mr-1 sm:mr-6 items-center flex justify-center"
+            title="axai"
           >
-            /
+            <img
+              src="/main.jpg"
+              alt="axai"
+              className="rounded-full"
+              width={48}
+              height={48}
+            />
           </Link>
           <Link
             href="/changelog"
@@ -49,5 +56,5 @@ export default function Header() {
       </header>
       <div className="h-24 pointer-events-none" />
     </>
-  )
+  );
 }

@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -8,18 +8,18 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import emailjs from "@emailjs/browser"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useState } from "react"
-import { useForm } from "react-hook-form"
-import { toast } from "sonner"
-import * as z from "zod"
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import emailjs from "@emailjs/browser";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import * as z from "zod";
 
 // const BASEURL = "http://localhost:3000"
-const BASEURL = "https://axai-kaizoku.github.io"
+const BASEURL = "https://axai-kaizoku.github.io";
 
 const formSchema = z.object({
   name: z
@@ -37,10 +37,10 @@ const formSchema = z.object({
       message: "Message must be at least 10 characters.",
     })
     .refine((v) => v.trim().length >= 10, { message: "Invalid message" }),
-})
+});
 
 export default function ContactForm() {
-  const [pending, setPending] = useState(false)
+  const [pending, setPending] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -49,12 +49,12 @@ export default function ContactForm() {
       email: "",
       message: "",
     },
-  })
+  });
   async function onSubmit(values: z.infer<typeof formSchema>) {
     // show a loading toast
     // const toastId = toast.loading("Submitting your message...")
 
-    setPending(true)
+    setPending(true);
     try {
       const res = await emailjs.send(
         "service_4qqth59", // service ID
@@ -65,22 +65,22 @@ export default function ContactForm() {
           message: `${values.name} - ${values.email} - ${values.message}`,
         },
         "ZrRVZQQnvYrSp1epQ" // public key
-      )
+      );
 
       if (res.status !== 200) {
-        toast.error("Failed to send your message. Please try again.")
-        return
+        toast.error("Failed to send your message. Please try again.");
+        return;
       }
 
       // EmailJS returns status 200 even if email fails, so you can optionally check res.text
-      form.reset()
+      form.reset();
 
-      toast.success("Your message has been sent successfully!")
+      toast.success("Your message has been sent successfully!");
     } catch (err) {
-      console.error(err)
-      toast.error("Failed to send your message. Please try again.")
+      console.error(err);
+      toast.error("Failed to send your message. Please try again.");
     }
-    setPending(false)
+    setPending(false);
   }
 
   return (
@@ -161,5 +161,5 @@ export default function ContactForm() {
         </div>
       </div>
     </div>
-  )
+  );
 }

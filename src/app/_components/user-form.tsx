@@ -1,19 +1,19 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { Input } from "@/components/ui/input"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
-import { useTransition } from "react"
-import { Label } from "@/components/ui/label"
-import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Input } from "@/components/ui/input";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { useTransition } from "react";
+import { Label } from "@/components/ui/label";
+import { cn } from "@/lib/utils";
 
 const UserSchema = z.object({
   name: z.string().min(2, { message: "Name is required" }),
   email: z.string().email(),
   emoji: z.string().emoji().optional(),
-})
+});
 
 const EMOJI_OPTIONS = [
   { emoji: "💰", label: "Money (Sale)" },
@@ -26,9 +26,9 @@ const EMOJI_OPTIONS = [
   { emoji: "🏆", label: "Achievement" },
   { emoji: "💡", label: "Idea" },
   { emoji: "🔔", label: "Notification" },
-]
+];
 
-type UserType = z.infer<typeof UserSchema>
+type UserType = z.infer<typeof UserSchema>;
 
 export default function UserForm() {
   const {
@@ -40,17 +40,17 @@ export default function UserForm() {
   } = useForm<UserType>({
     resolver: zodResolver(UserSchema),
     defaultValues: { email: "", name: "" },
-  })
+  });
 
-  const selectedEmoji = watch("emoji")
+  const selectedEmoji = watch("emoji");
 
-  const [pending, startTransition] = useTransition()
+  const [pending, startTransition] = useTransition();
 
   const onSubmit = async (data: UserType) => {
     startTransition(async () => {
-      console.log(data)
-    })
-  }
+      console.log(data);
+    });
+  };
   return (
     <form
       className="w-full space-y-6 rounded border p-8 sm:max-w-sm"
@@ -119,5 +119,5 @@ export default function UserForm() {
         Submit
       </Button>
     </form>
-  )
+  );
 }

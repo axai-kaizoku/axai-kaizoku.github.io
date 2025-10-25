@@ -1,5 +1,10 @@
-import Link from "next/link"
-import { Timeline } from "./_components/timeline"
+import Link from "next/link";
+import { Timeline } from "./_components/timeline";
+import { type Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Changelog",
+};
 
 export default function Changelog() {
   const data = [
@@ -147,11 +152,11 @@ export default function Changelog() {
         </div>
       ),
     },
-  ]
+  ];
 
   return (
     <div className="w-full">
       <Timeline data={data} />
     </div>
-  )
+  );
 }

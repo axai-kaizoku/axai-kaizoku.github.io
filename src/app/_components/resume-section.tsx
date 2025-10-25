@@ -1,6 +1,6 @@
-import Link from "next/link"
-import Reveal from "./reveal"
-import { Skeleton } from "@/components/ui/skeleton"
+import Link from "next/link";
+import Reveal from "./reveal";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function ResumeSection() {
   return (
@@ -115,7 +115,7 @@ export default function ResumeSection() {
         </Reveal>
       </section>
     </>
-  )
+  );
 }
 
 export function ResumeSecxSkeleton() {
@@ -151,5 +151,5 @@ export function ResumeSecxSkeleton() {
         <Skeleton className="h-4 w-1/4 mb-4" />
       </section>
     </>
-  )
+  );
 }

@@ -33,7 +33,7 @@
  *  (used in cases of optimization)
  */
 
-await import("./src/env.js")
+await import("./src/env.js");
 
 /** @type {import("next").default} */
 const config = {
@@ -44,6 +44,6 @@ const config = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-}
+};
 
-export default config
+export default config;

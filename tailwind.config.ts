@@ -1,9 +1,9 @@
-import type { Config } from "tailwindcss"
-import { fontFamily } from "tailwindcss/defaultTheme"
+import type { Config } from "tailwindcss";
+import { fontFamily } from "tailwindcss/defaultTheme";
 //@ts-expect-error - // we don't have DT file for this module
-import { default as flattenColorPalette } from "tailwindcss/lib/util/flattenColorPalette"
-import svgToDataUri from "mini-svg-data-uri"
-import TailwindMerge from "tailwindcss-animate"
+import { default as flattenColorPalette } from "tailwindcss/lib/util/flattenColorPalette";
+import svgToDataUri from "mini-svg-data-uri";
+import TailwindMerge from "tailwindcss-animate";
 
 const config = {
   darkMode: ["class"],
@@ -122,9 +122,9 @@ const config = {
           }),
         },
         { values: flattenColorPalette(theme("backgroundColor")), type: "color" }
-      )
+      );
     },
   ],
-} satisfies Config
+} satisfies Config;
 
-export default config
+export default config;

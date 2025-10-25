@@ -1,39 +1,59 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
 
 const ScrollDown = () => {
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     const handleScroll = () => {
-      const scroll = window.scrollY
-      const scrollDown = document.getElementById("scrollDownButton")
+      const scroll = window.scrollY;
+      const scrollDown = document.getElementById("scrollDownButton");
       if (scrollDown) {
-        scrollDown.style.opacity = scroll > 100 ? "0" : "1"
+        scrollDown.style.opacity = scroll > 100 ? "0" : "1";
       }
-    }
+    };
 
-    document.addEventListener("scroll", handleScroll)
+    document.addEventListener("scroll", handleScroll);
 
     return () => {
-      document.removeEventListener("scroll", handleScroll)
-    }
-  }, [])
+      document.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   useEffect(() => {
     if (window) {
-      setLoading(false)
-      if (process.env.NODE_ENV !== "development") {
+      setLoading(false);
+      (function axaiBanner() {
         console.log(
-          "%cHeyy there! 👋🏻 I see you checking out my code. I'm Akshay, the creator of this site. It was built using Next.js, TypeScript, and TailwindCSS — a powerful stack! 💪🏻 Just remember, learn from this, don’t copy it. Have something to chat?? 02b3akshay@gmail.com 📧",
-          "background: #6c8c48; color: #f8fafc; font-size: 22px; font-weight: bold; padding: 25px 10px; text-align: center; text-shadow: 2px 2px 0 rgba(45, 45, 45);"
-        )
-      }
+          "%cWelcome to\n",
+          "color:#ffffff; font-size:14px; font-family:monospace;"
+        );
+
+        console.log(
+          "%c                  _   _     \n" +
+            "%c   __ ___  ____ _(_) ( )___ \n" +
+            "%c  / _` \\ \\/ / _` | | |// __|\n" +
+            "%c | (_| |>  < (_| | |   \\__ \\\n" +
+            "%c  \\__,_/_/\\_\\__,_|_|   |___/\n" +
+            "%c                              \n",
+          "color:#ff6b6b; font-size:14px; font-family:monospace;",
+          "color:#ff6b6b; font-size:14px; font-family:monospace;",
+          "color:#ff6b6b; font-size:14px; font-family:monospace;",
+          "color:#ff6b6b; font-size:14px; font-family:monospace;",
+          "color:#ff6b6b; font-size:14px; font-family:monospace;",
+          "color:#ff6b6b; font-size:14px; font-family:monospace;"
+        );
+
+        console.log(
+          "%cportfolio",
+          "color:#ffffff; font-size:14px; font-family:monospace;"
+        );
+      })();
     }
-  }, [])
+  }, []);
 
   if (loading) {
-    return <></>
+    return <></>;
   }
 
   return (
@@ -60,7 +80,7 @@ const ScrollDown = () => {
         </svg>
       </div>
     </a>
-  )
-}
+  );
+};
 
-export default ScrollDown
+export default ScrollDown;
