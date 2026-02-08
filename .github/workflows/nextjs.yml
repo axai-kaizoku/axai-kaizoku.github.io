@@ -29,42 +29,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Detect package manager
-        id: detect-package-manager
-        run: |
-          echo "manager=npm" >> $GITHUB_OUTPUT
-          echo "install=ci" >> $GITHUB_OUTPUT
-          echo "build=npx next build" >> $GITHUB_OUTPUT
-          echo "export=npx next export" >> $GITHUB_OUTPUT
-
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: "18"
-          cache: ${{ steps.detect-package-manager.outputs.manager }}
-
-      - name: Install dependencies
-        run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.install }}
-
-      - name: Install TypeScript and Types
-        run: ${{ steps.detect-package-manager.outputs.manager }} install --save-dev typescript @types/node
+          cache: "npm"
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
         with:
           static_site_generator: next
 
-      - name: Clear Next.js cache
-        uses: actions/cache@v4
-        with:
-          path: .next/cache
-          key: ${{ runner.os }}-nextjs-clear-cache
+      - name: Install dependencies
+        run: npm ci
 
       - name: Build with Next.js
-        run: ${{ steps.detect-package-manager.outputs.build }}
-
-      # - name: Export static files
-      #   run: ${{ steps.detect-package-manager.outputs.manager }} run ${{ steps.detect-package-manager.outputs.export }}
+        run: npm run build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
