@@ -32,10 +32,17 @@ jobs:
       - name: Detect package manager
         id: detect-package-manager
         run: |
-          echo "manager=npm" >> $GITHUB_OUTPUT
-          echo "install=ci" >> $GITHUB_OUTPUT
-          echo "build=npx next build" >> $GITHUB_OUTPUT
-          echo "export=npx next export" >> $GITHUB_OUTPUT
+          if [ -f "${{ github.workspace }}/yarn.lock" ]; then
+            echo "manager=yarn" >> $GITHUB_OUTPUT
+            echo "install=install --frozen-lockfile" >> $GITHUB_OUTPUT
+            echo "build=next build" >> $GITHUB_OUTPUT
+            echo "export=next export" >> $GITHUB_OUTPUT
+          else
+            echo "manager=npm" >> $GITHUB_OUTPUT
+            echo "install=ci" >> $GITHUB_OUTPUT
+            echo "build=npx next build" >> $GITHUB_OUTPUT
+            echo "export=npx next export" >> $GITHUB_OUTPUT
+          fi
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -47,7 +54,7 @@ jobs:
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.install }}
 
       - name: Install TypeScript and Types
-        run: ${{ steps.detect-package-manager.outputs.manager }} install --save-dev typescript @types/node
+        run: ${{ steps.detect-package-manager.outputs.manager }} add --dev typescript @types/node
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
