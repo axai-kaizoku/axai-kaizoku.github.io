@@ -61,7 +61,7 @@ jobs:
           key: ${{ runner.os }}-nextjs-clear-cache
 
       - name: Build with Next.js
-        run: ${{ steps.detect-package-manager.outputs.manager }} run ${{ steps.detect-package-manager.outputs.build }}
+        run: ${{ steps.detect-package-manager.outputs.build }}
 
       # - name: Export static files
       #   run: ${{ steps.detect-package-manager.outputs.manager }} run ${{ steps.detect-package-manager.outputs.export }}
