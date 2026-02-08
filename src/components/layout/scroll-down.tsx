@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 
 const ScrollDown = () => {
-  const [loading, setLoading] = useState(true);
   useEffect(() => {
     const handleScroll = () => {
       const scroll = window.scrollY;
@@ -19,42 +18,6 @@ const ScrollDown = () => {
       document.removeEventListener("scroll", handleScroll);
     };
   }, []);
-
-  useEffect(() => {
-    if (window) {
-      setLoading(false);
-      (function axaiBanner() {
-        console.log(
-          "%cWelcome to\n",
-          "color:#ffffff; font-size:14px; font-family:monospace;"
-        );
-
-        console.log(
-          "%c                  _   _     \n" +
-            "%c   __ ___  ____ _(_) ( )___ \n" +
-            "%c  / _` \\ \\/ / _` | | |// __|\n" +
-            "%c | (_| |>  < (_| | |   \\__ \\\n" +
-            "%c  \\__,_/_/\\_\\__,_|_|   |___/\n" +
-            "%c                              \n",
-          "color:#ff6b6b; font-size:14px; font-family:monospace;",
-          "color:#ff6b6b; font-size:14px; font-family:monospace;",
-          "color:#ff6b6b; font-size:14px; font-family:monospace;",
-          "color:#ff6b6b; font-size:14px; font-family:monospace;",
-          "color:#ff6b6b; font-size:14px; font-family:monospace;",
-          "color:#ff6b6b; font-size:14px; font-family:monospace;"
-        );
-
-        console.log(
-          "%cportfolio",
-          "color:#ffffff; font-size:14px; font-family:monospace;"
-        );
-      })();
-    }
-  }, []);
-
-  if (loading) {
-    return <></>;
-  }
 
   return (
     <a
