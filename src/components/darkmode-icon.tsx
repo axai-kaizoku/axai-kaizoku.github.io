@@ -2,14 +2,22 @@
 
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import { useTheme } from "next-themes";
+import { useWebHaptics } from "web-haptics/react";
 
 export const ToggleTheme = ({ className }: { className?: string }) => {
   const { theme, setTheme } = useTheme();
+  const { trigger } = useWebHaptics();
   const isDark = theme === "dark";
 
   return (
     <button
-      onClick={() => setTheme(isDark ? "light" : "dark")}
+      onClick={() => {
+        trigger([
+          { duration: 40, intensity: 0.8 },
+          { delay: 100, duration: 40, intensity: 0.6 },
+        ]);
+        setTheme(isDark ? "light" : "dark");
+      }}
       className={className}
     >
       <DarkmodeIcon isDark={isDark} />

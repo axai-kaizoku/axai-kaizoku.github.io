@@ -1,9 +1,12 @@
 "use client";
 import { Star } from "@/components/star-icon";
 import confetti from "canvas-confetti";
+import { useWebHaptics } from "web-haptics/react";
 
 export const ConfettiStar = () => {
+  const { trigger } = useWebHaptics();
   const handleClick = () => {
+    trigger([{ duration: 2400 }], { intensity: 0.9 });
     const end = Date.now() + 3 * 1000;
     const colors = ["#ff6b6b", "#feca57", "#48dbfb", "#1dd1a1", "#ff9ff3"];
     const frame = () => {
@@ -11,15 +14,15 @@ export const ConfettiStar = () => {
       void confetti({
         particleCount: 5,
         angle: 65,
-        spread: 55,
+        spread: 62,
         startVelocity: 76,
         origin: { x: 0, y: 0.9 },
         colors: colors,
       });
       void confetti({
         particleCount: 5,
-        angle: 125,
-        spread: 55,
+        angle: 120,
+        spread: 58,
         startVelocity: 75,
         origin: { x: 1, y: 0.9 },
         colors: colors,

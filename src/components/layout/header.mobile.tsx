@@ -3,6 +3,7 @@
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { useCallback } from "react";
+import { useWebHaptics } from "web-haptics/react";
 
 export default function MobileNav({
   showNav,
@@ -11,7 +12,9 @@ export default function MobileNav({
   showNav: boolean;
   setShowNav: (value: ((prevstate: boolean) => boolean) | boolean) => void;
 }) {
+  const { trigger } = useWebHaptics();
   const toggleNav = useCallback(() => {
+    trigger([{ duration: 30 }, { delay: 60, duration: 40, intensity: 1 }]);
     setShowNav((current) => !current);
   }, [setShowNav]);
 
