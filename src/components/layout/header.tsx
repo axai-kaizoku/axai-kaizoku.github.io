@@ -5,9 +5,11 @@ import { buttonVariants } from "../ui/button";
 import { cn } from "@/lib/utils";
 import { useEffect, useRef, useState } from "react";
 import MobileNav from "./header.mobile";
+import { useWebHaptics } from "web-haptics/react";
 
 export default function Header() {
   const [showNav, setShowNav] = useState(false);
+  const { trigger } = useWebHaptics();
   const hasPrintedToConsole = useRef<boolean>(false);
 
   useEffect(() => {
@@ -52,6 +54,12 @@ export default function Header() {
             href="/"
             className="z-50 rounded-full size-10 sm:size-12 mr-1 sm:mr-6 items-center flex justify-center"
             title="axai"
+            onClick={() =>
+              trigger([
+                { duration: 30 },
+                { delay: 60, duration: 40, intensity: 1 },
+              ])
+            }
           >
             <img
               src="/main.jpg"
