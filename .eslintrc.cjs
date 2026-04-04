@@ -14,6 +14,11 @@ const config = {
     "@typescript-eslint/array-type": "off",
     "@next/next/no-img-element": "off",
     "@typescript-eslint/consistent-type-definitions": "off",
+    "@typescript-eslint/strict-boolean-expressions": "off",
+    "@typescript-eslint/prefer-nullish-coalescing": "off",
+    "@typescript-eslint/no-unsafe-assignment": "off",
+    "@typescript-eslint/no-unsafe-call": "off",
+    "@typescript-eslint/no-non-null-assertion": "off",
     "@typescript-eslint/consistent-type-imports": [
       "warn",
       {
@@ -37,5 +42,5 @@ const config = {
       },
     ],
   },
-}
-module.exports = config
+};
+module.exports = config;

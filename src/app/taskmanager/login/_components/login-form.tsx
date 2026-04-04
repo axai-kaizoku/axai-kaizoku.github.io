@@ -1,5 +1,6 @@
 "use client";
 
+import { login } from "@/api/auth";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -9,107 +10,81 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import emailjs from "@emailjs/browser";
+import { Input, PasswordInput } from "@/components/ui/input";
+import { useAppDispatch } from "@/redux/hooks";
+import { setAuth } from "@/redux/slices/auth.slice";
+import { processAuthData } from "@/utils/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import * as z from "zod";
 
 const formSchema = z.object({
-  name: z
-    .string()
-    .min(2, {
-      message: "Name must be at least 2 characters.",
-    })
-    .refine((v) => v.trim().length >= 2),
   email: z.string().email({
     message: "Invalid email address.",
   }),
-  message: z
-    .string()
-    .min(10, {
-      message: "Message must be at least 10 characters.",
-    })
-    .refine((v) => v.trim().length >= 10, { message: "Invalid message" }),
+  password: z.string().refine((v) => v.length > 0),
 });
 
-export default function ContactForm() {
+export function LoginForm() {
   const [pending, setPending] = useState(false);
+  const dispatch = useAppDispatch();
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
       email: "",
-      message: "",
+      password: "",
     },
   });
+
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    // show a loading toast
-    // const toastId = toast.loading("Submitting your message...")
+    const toastId = toast.loading("Logging in...");
 
     setPending(true);
     try {
-      const res = await emailjs.send(
-        "service_4qqth59", // service ID
-        "template_vf2mcx4", // template ID
-        {
-          from_name: values.name,
-          from_email: values.email,
-          message: `${values.name} - ${values.email} - ${values.message}`,
-        },
-        "ZrRVZQQnvYrSp1epQ" // public key
+      const data = await login({
+        email: values.email,
+        password: values.password,
+      });
+      dispatch(
+        setAuth({
+          accessToken: data.accessToken,
+          refreshToken: data.refreshToken,
+          userId: data.id,
+        })
       );
+      processAuthData(data.accessToken, data.refreshToken, data.id);
+      router.push("/taskmanager/tasks");
 
-      if (res.status !== 200) {
-        toast.error("Failed to send your message. Please try again.");
-        return;
-      }
-
-      // EmailJS returns status 200 even if email fails, so you can optionally check res.text
       form.reset();
 
-      toast.success("Your message has been sent successfully!");
+      toast.success("Logged In!", {
+        id: toastId,
+      });
     } catch (err) {
       console.error(err);
-      toast.error("Failed to send your message. Please try again.");
+      toast.error("Failed to Login. Please try again.", {
+        id: toastId,
+      });
+    } finally {
+      setPending(false);
     }
-    setPending(false);
   }
 
   return (
     <div className="flex min-h-[60vh] h-full w-full items-center justify-center px-4">
       <div className="mx-auto w-[20rem]  max-w-lg">
         <div className="space-y-4">
-          <h1 className="text-5xl my-6">Contact.</h1>
+          <h1 className="text-5xl my-6">Login.</h1>
         </div>
         <div>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
               <div className="grid gap-4">
-                <FormField
-                  control={form.control}
-                  name="name"
-                  render={({ field }) => (
-                    <FormItem className="grid gap-2">
-                      <FormLabel htmlFor="name">Name</FormLabel>
-                      <FormControl>
-                        <Input
-                          id="name"
-                          placeholder="Your name"
-                          type="text"
-                          autoComplete="name"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
                 <FormField
                   control={form.control}
                   name="email"
@@ -132,14 +107,14 @@ export default function ContactForm() {
 
                 <FormField
                   control={form.control}
-                  name="message"
+                  name="password"
                   render={({ field }) => (
                     <FormItem className="grid gap-2">
-                      <FormLabel htmlFor="message">Message</FormLabel>
+                      <FormLabel htmlFor="password">Password</FormLabel>
                       <FormControl>
-                        <Textarea
-                          id="message"
-                          placeholder="Your message..."
+                        <PasswordInput
+                          id="password"
+                          placeholder="Your password"
                           autoComplete="off"
                           {...field}
                         />
@@ -149,8 +124,12 @@ export default function ContactForm() {
                   )}
                 />
 
-                <Button type="submit" className="w-full" disabled={pending}>
-                  Send Message
+                <Button
+                  type="submit"
+                  className="w-full mt-2"
+                  disabled={pending}
+                >
+                  Login
                 </Button>
               </div>
             </form>
