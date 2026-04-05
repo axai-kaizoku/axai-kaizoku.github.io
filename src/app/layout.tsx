@@ -9,7 +9,10 @@ import { siteConfig } from "@/lib/site-config";
 import { cn } from "@/lib/utils";
 import { GeistSans } from "geist/font/sans";
 import type { Metadata, Viewport } from "next";
+import { ReduxProvider } from "@/providers/redux-provider";
+
 import { Montserrat, Space_Grotesk } from "next/font/google";
+import { AuthProvider } from "@/providers/auth-provider";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -117,11 +120,15 @@ export default function RootLayout({
     >
       <body>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <Header />
-          <main className="px-8 md:px-10">{children}</main>
-          <ScreenSize />
-          <Footer />
-          <Toaster />
+          <ReduxProvider>
+            <AuthProvider>
+              <Header />
+              <Toaster />
+              <main className="px-8 md:px-10">{children}</main>
+              <ScreenSize />
+              <Footer />
+            </AuthProvider>
+          </ReduxProvider>
         </ThemeProvider>
       </body>
     </html>

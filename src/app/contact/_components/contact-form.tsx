@@ -18,9 +18,6 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import * as z from "zod";
 
-// const BASEURL = "http://localhost:3000"
-const BASEURL = "https://axai-kaizoku.github.io";
-
 const formSchema = z.object({
   name: z
     .string()
