@@ -1,9 +1,7 @@
+import { API_BASE_URL, BASE_URL_HOST } from "@/constants/global.const";
+import { LoginInfo } from "@/types/user";
 import axios from "axios";
 import { AUTH } from "./endpoints";
-import { API_BASE_URL } from "@/constants/global.const";
-import { createApi } from "@reduxjs/toolkit/query/react";
-import { axiosBaseQuery } from "@/lib/axios";
-import { LoginInfo } from "@/types/user";
 
 export const refreshAccessToken = async (tokens: {
   accessToken: string;
@@ -46,4 +44,9 @@ export const signup = async (tokens: {
   });
 
   return response.data.data;
+};
+
+export const healthCheck = async () => {
+  const res = await axios.get(`${BASE_URL_HOST}${AUTH.healthCheck.url}`);
+  return res.data.data;
 };

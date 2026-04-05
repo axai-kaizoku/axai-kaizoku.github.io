@@ -1,11 +1,15 @@
 "use client";
+import { cn } from "@/lib/utils";
+import { RotateCcw } from "lucide-react";
 import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
+import { useWebHaptics } from "web-haptics/react";
 import { ToggleTheme } from "../darkmode-icon";
 import { buttonVariants } from "../ui/button";
-import { cn } from "@/lib/utils";
-import { useEffect, useRef, useState } from "react";
 import MobileNav from "./header.mobile";
-import { useWebHaptics } from "web-haptics/react";
+import { toast } from "sonner";
+import { getNextFarewell } from "@/utils/toast";
+import { healthCheck } from "@/api/auth";
 
 export default function Header() {
   const [showNav, setShowNav] = useState(false);
@@ -85,6 +89,14 @@ export default function Header() {
         <div className="flex items-center gap-0 sm:gap-0.5">
           <ToggleTheme
             className={cn(buttonVariants({ variant: "link" }), "z-20")}
+          />
+          <RotateCcw
+            size={18}
+            className="z-20 mr-2 transform transition-all active:-rotate-45"
+            onClick={() => {
+              healthCheck();
+              toast.message(getNextFarewell());
+            }}
           />
           <div className={cn("sm:hidden block")}>
             <MobileNav showNav={showNav} setShowNav={setShowNav} />

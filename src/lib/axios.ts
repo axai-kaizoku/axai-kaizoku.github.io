@@ -81,10 +81,8 @@ export const axiosBaseQuery =
   > =>
   async ({ method, url, baseURL, data, headers, params }, api) => {
     const { getState, dispatch } = api;
-    const state = getState() as RootState;
     const accessToken = (getState() as RootState).auth.accessToken;
     const refreshToken = (getState() as RootState).auth.refreshToken;
-    console.log({ accessToken });
 
     const requestHeaders = {
       ...headers,

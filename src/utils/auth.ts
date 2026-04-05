@@ -62,8 +62,6 @@ export const processAuthData = (
     Cookies.set(USER_ID, userId, cookieOptions);
   }
 
-  console.log({ userId });
-
   return {
     accessToken,
     refreshToken,

@@ -1,6 +1,6 @@
 "use client";
 
-import { login } from "@/api/auth";
+import { login, signup } from "@/api/auth";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -11,6 +11,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input, PasswordInput } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
 import { useAppDispatch } from "@/redux/hooks";
 import { setAuth } from "@/redux/slices/auth.slice";
 import { processAuthData } from "@/utils/auth";
@@ -25,11 +26,14 @@ const formSchema = z.object({
   email: z.string().email({
     message: "Invalid email address.",
   }),
-  password: z.string().refine((v) => v.length > 0),
+  password: z
+    .string()
+    .refine((v) => v.length > 7, "Password must be min 8 char"),
 });
 
 export function LoginForm() {
   const [pending, setPending] = useState(false);
+  const [isSignup, setIsSignup] = useState(false);
   const dispatch = useAppDispatch();
   const router = useRouter();
 
@@ -43,9 +47,7 @@ export function LoginForm() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const toastId = toast.loading("Logging in...");
-
-    setPending(true);
-    try {
+    const processLogin = async () => {
       const data = await login({
         email: values.email,
         password: values.password,
@@ -58,8 +60,19 @@ export function LoginForm() {
         })
       );
       processAuthData(data.accessToken, data.refreshToken, data.id);
-      router.push("/taskmanager/tasks");
-
+      router.push("/taskmanager");
+    };
+    setPending(true);
+    try {
+      if (isSignup) {
+        void signup({ email: values.email, password: values.password })
+          .then(() => processLogin())
+          .catch((er: { response: { data: { message: string } } }) => {
+            toast.error(String(er?.response?.data?.message), { id: toastId });
+          });
+      } else {
+        await processLogin();
+      }
       form.reset();
 
       toast.success("Logged In!", {
@@ -78,8 +91,20 @@ export function LoginForm() {
   return (
     <div className="flex min-h-[60vh] h-full w-full items-center justify-center px-4">
       <div className="mx-auto w-[20rem]  max-w-lg">
-        <div className="space-y-4">
-          <h1 className="text-5xl my-6">Login.</h1>
+        <div className="space-y-4 flex items-center gap-4">
+          <button
+            className={cn(!isSignup ? "opacity-100" : "opacity-60")}
+            onClick={() => setIsSignup(false)}
+          >
+            <h1 className="text-5xl my-6">Login.</h1>
+          </button>
+          <div className="opacity-50">or</div>
+          <button
+            className={cn(!isSignup ? "opacity-60" : "opacity-100")}
+            onClick={() => setIsSignup(true)}
+          >
+            <h1 className="text-5xl my-6">Signup.</h1>
+          </button>
         </div>
         <div>
           <Form {...form}>
@@ -129,7 +154,7 @@ export function LoginForm() {
                   className="w-full mt-2"
                   disabled={pending}
                 >
-                  Login
+                  Enter
                 </Button>
               </div>
             </form>

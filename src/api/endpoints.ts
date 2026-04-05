@@ -14,6 +14,10 @@ export const AUTH = {
     method: Method.POST,
     params: (email: string, password: string) => ({ email, password }),
   },
+  healthCheck: {
+    url: "/healthCheck",
+    method: Method.GET,
+  },
 };
 
 export const TASKS = {
@@ -25,5 +29,10 @@ export const TASKS = {
     url: `/tasks/`,
     method: Method.GET,
     params: (id: string) => ({ id }),
+  },
+  createTask: {
+    url: `/tasks`,
+    method: Method.POST,
+    body: (title: string, description: string) => ({ title, description }),
   },
 };

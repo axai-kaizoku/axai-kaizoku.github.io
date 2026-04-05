@@ -9,7 +9,6 @@ export function AuthProvider({ children }: PropsWithChildren) {
   const { isAuthLoaded } = useAppSelector((state) => state.auth);
   useEffect(() => {
     const tokens = getAuthSync();
-    console.log({ tokens });
     if (tokens?.accessToken) {
       dispatch(setAuth(tokens));
     }

@@ -20,7 +20,18 @@ export const taskApi = createApi({
         params: TASKS.getTaskById.params(params.id),
       }),
     }),
+    createTask: builder.mutation<Task, { title: string; description: string }>({
+      query: (params) => ({
+        url: TASKS.createTask.url,
+        method: TASKS.createTask.method,
+        data: TASKS.createTask.body(params.title, params.description),
+      }),
+    }),
   }),
 });
 
-export const { useGetAllTasksQuery, useGetTaskByIdQuery } = taskApi;
+export const {
+  useGetAllTasksQuery,
+  useGetTaskByIdQuery,
+  useCreateTaskMutation,
+} = taskApi;
